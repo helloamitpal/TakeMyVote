@@ -1,9 +1,10 @@
 import { handle } from 'redux-pack';
 
 import * as actionTypes from './voteActionTypes';
+// import { processList } from './voteHelper';
 
 const initialState = {
-  votes: null,
+  questions: null,
   error: '',
   loading: false
 };
@@ -12,7 +13,7 @@ const voteReducer = (state = initialState, action = '') => {
   const { type, payload } = action;
 
   switch (type) {
-    case actionTypes.GET_ALL_VOTING: {
+    case actionTypes.GET_ALL_QUESTIONS: {
       return handle(state, action, {
         start: (prevState) => ({
           ...prevState,
@@ -21,7 +22,7 @@ const voteReducer = (state = initialState, action = '') => {
         }),
         success: (prevState) => ({
           ...prevState,
-          weathers: [...payload.list]
+          questions: [...payload]
         }),
         failure: (prevState) => ({
           ...prevState,

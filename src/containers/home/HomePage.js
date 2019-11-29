@@ -1,33 +1,51 @@
-import React, { useEffect, useState, Fragment } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
 import * as voteActionCreators from './voteActionCreator';
+import LoadingIndicator from '../../components/LoadingIndicator';
+
+import './homePage.css';
 
 const HomePage = ({ voteState, voteActions }) => {
-  const { loading, votes, error } = voteState;
+    const { loading, questions, error } = voteState;
 
-  useEffect(() => {
-    voteActions.getVotingList();
-  }, []);
+    useEffect(() => {
+        voteActions.getQuestionList();
+    }, []);
 
-  return (
-    <h1>Home</h1>
-  );
+    return (
+        <div className="home-page-container">
+            {loading ? <LoadingIndicator /> : null}
+            {!loading && error && <p>Something went wrong. We are looking into this issue. Please try again after some time.</p>}
+            {(!loading && questions && questions.length)
+                ? (
+                    <div className="question-list">
+                        {
+                            questions.map(({ question }) => (
+                                <p>{question}</p>
+                            ))
+                        }
+                    </div>
+                )
+                : null
+            }
+        </div>
+    );
 };
 
 HomePage.propTypes = {
-  voteState: PropTypes.object,
-  voteActions: PropTypes.object
+    voteState: PropTypes.object,
+    voteActions: PropTypes.object
 };
 
 const mapStateToProps = (state) => ({
-  voteState: state.vote
+    voteState: state.vote
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  voteActions: bindActionCreators(voteActionCreators, dispatch)
+    voteActions: bindActionCreators(voteActionCreators, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
