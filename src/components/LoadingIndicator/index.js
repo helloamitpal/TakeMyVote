@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './LoadingIndicator.css';
+import './loadingIndicator.css';
 
 const LoadingIndicator = ({ type }) => {
   const html = (

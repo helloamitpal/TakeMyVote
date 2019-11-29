@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
 import Router from '../router';
+import configureStore from '../stores/configureStores';
 import config from '../config';
 
 import './app.css';
@@ -27,9 +28,11 @@ class App extends Component {
         const content = rehydrated ? (
             <div className="app-container">
                 <Provider store={store} key={config.STORAGE_KEY}>
-                    <BrowserRouter>
-                        <Router />
-                    </BrowserRouter>
+                    <div className="body-container">
+                        <BrowserRouter>
+                            <Router />
+                        </BrowserRouter>
+                    </div>
                 </Provider>
             </div>
         ) : null;

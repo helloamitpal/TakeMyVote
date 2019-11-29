@@ -3,11 +3,11 @@ import { Switch, Route, withRouter } from 'react-router-dom';
 
 import config from '../config';
 import LoadingIndicator from '../components/LoadingIndicator';
-import Header from '../components/Header';
+import Header from '../components/header';
 
 const Router = () => {
-    const HomeModule = (React.lazy(() => (import('../containers/HomePage/Loadable'))));
-    const NotFoundModule = (React.lazy(() => (import('../containers/NotFoundPage/Loadable'))));
+    const HomeModule = (React.lazy(() => (import('../containers/home/HomePage'))));
+    const NotFoundModule = (React.lazy(() => (import('../containers/not-found/NotFoundPage'))));
 
     return (
         <Suspense fallback={<LoadingIndicator />}>
