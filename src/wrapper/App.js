@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import Router from '../router';
 import configureStore from '../stores/configureStores';
 import config from '../config';
+import Header from '../components/header';
 
 import './app.css';
 
@@ -28,11 +29,10 @@ class App extends Component {
         const content = rehydrated ? (
             <div className="app-container">
                 <Provider store={store} key={config.STORAGE_KEY}>
-                    <div className="body-container">
-                        <BrowserRouter>
-                            <Router />
-                        </BrowserRouter>
-                    </div>
+                    <Header />
+                    <BrowserRouter>
+                        <Router />
+                    </BrowserRouter>
                 </Provider>
             </div>
         ) : null;
