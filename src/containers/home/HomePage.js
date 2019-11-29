@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 
 import * as voteActionCreators from './voteActionCreator';
 import LoadingIndicator from '../../components/LoadingIndicator';
+import Grid from '../../components/grid';
+import { formatDate } from '../../service/helper';
 
 import './homePage.css';
 
@@ -15,19 +17,26 @@ const HomePage = ({ voteState, voteActions }) => {
         voteActions.getQuestionList();
     }, []);
 
+    const onSelectCard = () => {
+
+    };
+
     return (
         <div className="home-page-container">
             {loading ? <LoadingIndicator /> : null}
             {!loading && error && <p>Something went wrong. We are looking into this issue. Please try again after some time.</p>}
             {(!loading && questions && questions.length)
                 ? (
-                    <div className="question-list">
+                    <Grid onSelectCard={onSelectCard}>
                         {
-                            questions.map(({ question }) => (
-                                <p>{question}</p>
+                            questions.map(({ question, published_at, url, choices }) => (
+                                <div className="question-container" key={`question${url.split('/').join('-')}`}>
+                                    <h1>{question}</h1>
+                                    <section>{formatDate(published_at)}</section>
+                                </div>
                             ))
                         }
-                    </div>
+                    </Grid>
                 )
                 : null
             }

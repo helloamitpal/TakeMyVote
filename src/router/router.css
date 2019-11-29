@@ -1,4 +1,6 @@
 .body-container {
   height: 100%;
   padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
 }

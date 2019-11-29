@@ -1,3 +1,18 @@
-.home-page-container {
-  
+.question-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.question-container h1 {
+  margin: 0;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.question-container section {
+  font-size: 0.8em;
 }

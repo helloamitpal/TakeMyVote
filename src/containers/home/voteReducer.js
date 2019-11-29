@@ -1,7 +1,6 @@
 import { handle } from 'redux-pack';
 
 import * as actionTypes from './voteActionTypes';
-// import { processList } from './voteHelper';
 
 const initialState = {
   questions: null,
