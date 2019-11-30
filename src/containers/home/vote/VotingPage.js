@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -12,13 +12,26 @@ import Button from '../../../components/button';
 import './votingPage.css';
 
 const VotingPage = ({ voteState, voteActions, location, history }) => {
-    const { loading, questions, error } = voteState;
-    const { state: { selectedQuestionIndex } } = location;
-    const { question, published_at, url, choices } = questions[selectedQuestionIndex];
+    const { loading, questionDetails, error, voted } = voteState;
+    const { state: { selectedQuestion } } = location;
     const [selectedVote, setSelectedVote] = useState('');
+    const { question, published_at, url, choices } = questionDetails || {};
+
+    useEffect(() => {
+        voteActions.getQuestionDetails(selectedQuestion);
+    }, []);
 
     const saveVote = (evt) => {
         evt.stopPropagation();
+        const data = choices.filter(({ url }) => (url === selectedVote));
+
+        if (!data) {
+            return;
+        }
+
+        const { votePercentage, ...payload } = data[0];
+
+        voteActions.castVote(selectedVote, payload);
     };
 
     const backToPreviousPage = (evt) => {
@@ -35,7 +48,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
         <div className="voting-page-container">
             <h1>Question Details</h1>
             <ErrorMessage loading={loading} hasError={error} />
-            {(!loading && selectedQuestionIndex && questions && questions.length)
+            {(!loading && !error && selectedQuestion && questionDetails && choices)
                 ? (
                     <div className="details">
                         <h3 className="header">{`Question: ${question}`}</h3>
@@ -48,7 +61,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                                         <div className="center">{`${votes} votes`}</div>
                                         <div className="center">{`${votePercentage}%`}</div>
                                         <div className="center">
-                                            <Button onClick={(evt) => selectVote(evt, url)} disabled={selectedVote === url} primary label={selectedVote === url ? 'Voted' : 'Vote'} />
+                                            <Button onClick={(evt) => selectVote(evt, url)} disabled={voted || selectedVote === url} primary label={selectedVote === url ? 'Voted' : 'Vote'} />
                                         </div>
                                     </li>
                                 ))
@@ -56,7 +69,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                         </ul>
                         <div className="button-section">
                             <Button onClick={backToPreviousPage} label="Back" />
-                            <Button onClick={saveVote} primary label="Save Vote" />
+                            <Button onClick={saveVote} primary disabled={voted} label="Save Vote" />
                         </div>
                     </div>
                 )

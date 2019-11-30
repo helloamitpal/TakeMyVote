@@ -21,14 +21,14 @@ const HomePage = ({ voteState, voteActions, history }) => {
     const onSelectCard = (evt, index) => {
         history.push({
             pathname: config.VOTING_PAGE,
-            state: { selectedQuestionIndex: index }
+            state: { selectedQuestion: questions[index].url }
         });
     };
 
     return (
         <div className="home-page-container">
             <ErrorMessage loading={loading} hasError={error} />
-            {(!loading && questions && questions.length)
+            {(!loading && !error && questions && questions.length)
                 ? (
                     <Grid onSelectCard={onSelectCard}>
                         {

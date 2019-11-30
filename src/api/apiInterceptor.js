@@ -9,10 +9,11 @@ const fireRequest = async (method, fullUrl, data) => {
   const options = {
     method,
     data: JSON.stringify(data),
-    mode: 'same-origin',
     timeout: 8000,
+    crossdomain: true,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
     }
   };
   try {

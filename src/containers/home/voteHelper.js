@@ -1,25 +1,28 @@
-const synthesizeData = (list) => {
-    const arr = [];
+const synthesizeQuestionDetails = (data) => {
+    const obj = {};
 
-    list.forEach(({ choices, ...rest }) => {
-        const votes = choices.map(({ votes }) => (votes));
-        const totalVotes = votes.reduce((total, val) => (total+(val || 0)));
-        const choicesArr = [];
-        choices.forEach(({ votes, ...restChoice }) => {
-            choicesArr.push({
-                ...restChoice,
-                votes,
-                votePercentage: Math.ceil((votes/totalVotes) * 100)
-            });
-        });
+    if (!data || Object.keys(data).length === 0) {
+        return obj;
+    }
+    const { choices, ...rest } = data;
+    const votes = choices.map(({ votes }) => (votes));
+    const totalVotes = votes.reduce((total, val) => (total+(val || 0)));
+    const choicesArr = [];
 
-        arr.push({
-            ...rest,
-            choices: choicesArr
+    choices.forEach(({ votes, ...restChoice }) => {
+        choicesArr.push({
+            ...restChoice,
+            votes,
+            votePercentage: Math.ceil((votes/totalVotes) * 100)
         });
     });
 
-    return arr;
+    Object.assign(obj, {
+        ...rest,
+        choices: choicesArr
+    });
+
+    return obj;
 };
 
-export { synthesizeData };
+export { synthesizeQuestionDetails };
