@@ -9,12 +9,14 @@ import './router.css';
 const Router = () => {
     const HomeModule = (React.lazy(() => (import('../containers/home/HomePage'))));
     const NotFoundModule = (React.lazy(() => (import('../containers/not-found/NotFoundPage'))));
+    const VotingModule = (React.lazy(() => (import('../containers/home/vote/VotingPage'))));
 
     return (
         <div className="body-container">
             <Suspense fallback={<LoadingIndicator />}>
                 <Switch>
                     <Route exact path={config.HOME_PAGE} render={(props) => <HomeModule {...props} />} />
+                    <Route exact path={config.VOTING_PAGE} render={(props) => <VotingModule {...props} />} />
                     <Route path="" render={(props) => <NotFoundModule {...props} />} />
                 </Switch>
             </Suspense>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -7,18 +7,22 @@ import * as voteActionCreators from './voteActionCreator';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Grid from '../../components/grid';
 import { formatDate } from '../../service/helper';
+import config from '../../config';
 
 import './homePage.css';
 
-const HomePage = ({ voteState, voteActions }) => {
+const HomePage = ({ voteState, voteActions, history }) => {
     const { loading, questions, error } = voteState;
 
     useEffect(() => {
         voteActions.getQuestionList();
     }, []);
 
-    const onSelectCard = () => {
-
+    const onSelectCard = (evt, index) => {
+        history.push({
+            pathname: config.VOTING_PAGE,
+            state: { details: questions[index] }
+        });
     };
 
     return (

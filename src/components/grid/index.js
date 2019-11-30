@@ -7,10 +7,10 @@ const Grid = ({ children, className, onSelectCard }) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const onClickCard = (evt, index, item) => {
+    const onClickCard = (evt, index) => {
         evt.stopPropagation();
         setCurrentIndex(index);
-        onSelectCard(evt, index, item);
+        onSelectCard(evt, index);
     };
 
     return (
@@ -20,7 +20,7 @@ const Grid = ({ children, className, onSelectCard }) => {
                     <div
                         className={`grid-item ${currentIndex === index ? 'active' : ''}`}
                         key={`grid-item-${index.toString()}`}
-                        onClick={(evt) => onClickCard(evt, index, item)}
+                        onClick={(evt) => onClickCard(evt, index)}
                     >
                     {item}
                     </div>
