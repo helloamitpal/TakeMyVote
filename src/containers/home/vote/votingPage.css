@@ -25,5 +25,5 @@
 .voting-page-container .button-section {
   margin-top: 1.5em;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }

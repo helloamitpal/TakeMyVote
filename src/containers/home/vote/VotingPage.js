@@ -6,16 +6,22 @@ import { bindActionCreators } from 'redux';
 import * as voteActionCreators from '../voteActionCreator';
 import ErrorMessage from '../../../components/error';
 import { formatDate } from '../../../service/helper';
+import config from '../../../config';
 
 import './votingPage.css';
 
-const VotingPage = ({ voteState, voteActions, location }) => {
+const VotingPage = ({ voteState, voteActions, location, history }) => {
     const { loading, questions, error } = voteState;
     const { state: { selectedQuestionIndex } } = location;
     const { question, published_at, url, choices } = questions[selectedQuestionIndex];
 
     const saveVote = (evt) => {
         evt.stopPropagation();
+    };
+
+    const backToPreviousPage = (evt) => {
+        evt.stopPropagation();
+        history.push(config.HOME_PAGE);
     };
 
     return (
@@ -40,8 +46,9 @@ const VotingPage = ({ voteState, voteActions, location }) => {
                             }
                         </ul>
                         <div className="button-section">
+                            <button className="button" onClick={backToPreviousPage}>Back</button>
                             <button className="button" onClick={saveVote}>Save Vote</button>
-                        </div>                        
+                        </div>
                     </div>
                 )
                 : null
