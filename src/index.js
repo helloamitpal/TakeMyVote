@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
 import App from './wrapper/App';
 import * as serviceWorker from './serviceWorker';
 import ErrorBoundary from './wrapper/ErrorBoundary';
+
+import './index.css';
 
 ReactDOM.render(<ErrorBoundary><App /></ErrorBoundary>, document.getElementById('root'));
 
