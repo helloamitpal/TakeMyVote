@@ -11,15 +11,23 @@ export const getQuestionList = () => (dispatch, getState, { api }) => {
 export const castVote = (url, payload) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.CAST_VOTE,
-        promise: api.post(url),
-        payload
+        promise: api.post(url, payload),
+        payload: {}
     });
 };
 
 export const getQuestionDetails = (url) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.GET_QUESTION_DETAILS,
-        promise: api.get(url),
+        promise: api.get(`https://polls.apiblueprint.org/${url}`),
+        payload: {}
+    });
+};
+
+export const createVote = (payload) => (dispatch, getState, { api }) => {
+    dispatch({
+        type: actionTypes.CREATE_VOTE,
+        promise: api.post('/questions?', payload),
         payload: {}
     });
 };

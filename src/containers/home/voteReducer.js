@@ -8,7 +8,8 @@ const initialState = {
     error: '',
     loading: false,
     voted: false,
-    questionDetails: null
+    questionDetails: null,
+    created: false
 };
 
 const temp = {
@@ -100,6 +101,32 @@ const voteReducer = (state = initialState, action = '') => {
                     ...prevState,
                     questionDetails: synthesizeQuestionDetails(temp /*{ ...payload }*/)
                 }),
+                failure: (prevState) => ({
+                    ...prevState,
+                    error: 'Something went wrong. Please try again after some time.'
+                }),
+                finish: (prevState) => ({
+                    ...prevState,
+                    loading: false
+                })
+            });
+        }
+
+        case actionTypes.CREATE_VOTE: {
+            return handle(state, action, {
+                start: (prevState) => ({
+                    ...prevState,
+                    error: '',
+                    loading: true,
+                    created: false
+                }),
+                success: (prevState) => {
+                    debugger;
+                    return {
+                        ...prevState,
+                        created: true
+                    };
+                },
                 failure: (prevState) => ({
                     ...prevState,
                     error: 'Something went wrong. Please try again after some time.'

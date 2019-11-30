@@ -42,3 +42,11 @@
 .create-vote-page-container h3 {
   font-size: 1em;
 }
+
+.create-vote-page-container .success {
+    border: 1px solid #32a532;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #32a532;
+    color: #fff;
+}

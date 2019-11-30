@@ -23,7 +23,7 @@
 }
 
 .loading-indicator.linear div:nth-child(2) {
-  background-color: #3b78e7;
+  background-color: #fdba2c;
   animation: loading 3s linear 1s infinite;
 }
 

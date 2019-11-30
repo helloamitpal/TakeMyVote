@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 const fireRequest = async (method, fullUrl, data) => {
   const options = {
     method,
-    data: JSON.stringify(data),
+    data,
     timeout: 8000,
     crossdomain: true,
     headers: {

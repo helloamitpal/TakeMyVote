@@ -1,3 +1,4 @@
 export const GET_ALL_QUESTIONS = 'GET_ALL_QUESTIONS';
 export const CAST_VOTE = 'CAST_VOTE';
 export const GET_QUESTION_DETAILS = 'GET_QUESTION_DETAILS';
+export const CREATE_VOTE = 'CREATE_VOTE';

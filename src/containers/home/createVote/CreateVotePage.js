@@ -5,12 +5,13 @@ import { bindActionCreators } from 'redux';
 
 import * as voteActionCreators from '../voteActionCreator';
 import Button from '../../../components/button';
+import ErrorMessage from '../../../components/error';
 import config from '../../../config';
 
 import './createVotePage.css';
 
 const CreateVotePage = ({ voteState, voteActions, history }) => {
-    const { loading, error } = voteState;
+    const { loading, error, created } = voteState;
     const MAX_CHOICE = 4;
     const MIN_CHOICE = 2;
 
@@ -18,7 +19,10 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
     const [question, setQuestion] = useState('');
 
     const createVote = (evt) => {
-        evt.stopPropagation();
+        voteActions.createVote({
+            question,
+            choices: choices.map(({ value }) => (value))
+        });
     };
 
     const gotoPreviousPage = (evt) => {
@@ -49,16 +53,18 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
     };
 
     return (
-        <form className="create-vote-page-container">
+        <div className="create-vote-page-container">
+            <ErrorMessage loading={loading} hasError={error} />
+            {created && !error && !loading && <p className="success">Vote has been created successfully</p>}
             <label htmlFor="question">
                 Question
-                <input type="text" name="question" onChange={onChangeQuestion} placeholder="Write your question" />
+                <input readOnly={created} type="text" name="question" onChange={onChangeQuestion} placeholder="Write your question" />
             </label>
             <h3>Choices</h3>
             {
                 choices.map(({ value, id }, index) => (
                     <div className="choice-section" key={`choice-input-${id}`}>
-                        <input value={value} type="text" onChange={(evt) => onChangeChoiceText(evt, index)} placeholder={`Choice ${index+1}`} />
+                        <input readOnly={created} value={value} type="text" onChange={(evt) => onChangeChoiceText(evt, index)} placeholder={`Choice ${index+1}`} />
                         {(index + 1) < choices.length && choices.length > MIN_CHOICE && <Button className="choice-btn" label="Remove" onClick={(evt) => removeChoice(evt, index)} />}
                         {(index + 1) === choices.length && <Button className="choice-btn" disabled={choices.length >= MAX_CHOICE} label="Add" onClick={addMoreChoice} />}
                     </div>
@@ -66,9 +72,9 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
             }
             <div className="button-section">
                 <Button label="Back" onClick={gotoPreviousPage} />
-                <Button label="Submit" primary onClick={createVote} />
+                <Button label="Submit" disabled={created} primary onClick={createVote} />
             </div>
-        </form>
+        </div>
     );
 };
 
