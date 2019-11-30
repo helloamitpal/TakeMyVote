@@ -1,0 +1,29 @@
+.voting-page-container .options-container {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 1.5em;
+  border: 1px solid #dfdfdf;
+  border-top: 0 none;
+}
+
+.voting-page-container .options-container li {
+  display: flex;
+  border-top: 1px solid #dfdfdf;
+  align-items: center;
+}
+
+.voting-page-container .options-container li > div {
+  width: 50px;
+  padding: 10px;
+}
+
+.voting-page-container .options-container li > div:first-child {
+  flex: 1;
+}
+
+.voting-page-container .button-section {
+  margin-top: 1.5em;
+  display: flex;
+  justify-content: flex-end;
+}

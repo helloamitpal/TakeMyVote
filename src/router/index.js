@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
 
 import config from '../config';
-import LoadingIndicator from '../components/LoadingIndicator';
+import LoadingIndicator from '../components/loadingIndicator';
 
 import './router.css';
 

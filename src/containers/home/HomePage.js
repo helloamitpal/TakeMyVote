@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 
 import * as voteActionCreators from './voteActionCreator';
-import LoadingIndicator from '../../components/LoadingIndicator';
+import ErrorMessage from '../../components/error';
 import Grid from '../../components/grid';
 import { formatDate } from '../../service/helper';
 import config from '../../config';
@@ -21,14 +21,13 @@ const HomePage = ({ voteState, voteActions, history }) => {
     const onSelectCard = (evt, index) => {
         history.push({
             pathname: config.VOTING_PAGE,
-            state: { details: questions[index] }
+            state: { selectedQuestionIndex: index }
         });
     };
 
     return (
         <div className="home-page-container">
-            {loading ? <LoadingIndicator /> : null}
-            {!loading && error && <p>Something went wrong. We are looking into this issue. Please try again after some time.</p>}
+            <ErrorMessage loading={loading} hasError={error} />
             {(!loading && questions && questions.length)
                 ? (
                     <Grid onSelectCard={onSelectCard}>
@@ -36,7 +35,8 @@ const HomePage = ({ voteState, voteActions, history }) => {
                             questions.map(({ question, published_at, url, choices }) => (
                                 <div className="question-container" key={`question${url.split('/').join('-')}`}>
                                     <h1>{question}</h1>
-                                    <section>{formatDate(published_at)}</section>
+                                    <section>{`Published on ${formatDate(published_at)}`}</section>
+                                    <section>{`${choices.length} choices`}</section>
                                 </div>
                             ))
                         }
