@@ -1,0 +1,44 @@
+.create-vote-page-container {
+  max-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.create-vote-page-container label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.create-vote-page-container input
+ {
+  margin: 10px 0;
+  font-size: 1.1em;
+  padding: 5px 8px;
+  flex: 1;
+  border: 1px solid #ccc;
+}
+
+.create-vote-page-container .button-section {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.create-vote-page-container .choice-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-vote-page-container .choice-btn {
+  margin-left: 10px;
+  font-size: 0.8em;
+}
+
+.create-vote-page-container h3 {
+  font-size: 1em;
+}
