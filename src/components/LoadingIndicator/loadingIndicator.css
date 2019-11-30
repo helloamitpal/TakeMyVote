@@ -18,17 +18,17 @@
 }
 
 .loading-indicator.linear div:nth-child(1) {
-  background-color: $linear-color-1;
+  background-color: #da4733;
   animation: loading 3s linear infinite;
 }
 
 .loading-indicator.linear div:nth-child(2) {
-  background-color: $linear-color-2;
+  background-color: #3b78e7;
   animation: loading 3s linear 1s infinite;
 }
 
 .loading-indicator.linear div:nth-child(3) {
-  background-color: $linear-color-3;
+  background-color: #094420;
   animation: loading 3s linear 2s infinite;
 }
 
