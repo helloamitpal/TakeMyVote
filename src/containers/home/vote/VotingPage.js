@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -15,6 +15,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
     const { loading, questions, error } = voteState;
     const { state: { selectedQuestionIndex } } = location;
     const { question, published_at, url, choices } = questions[selectedQuestionIndex];
+    const [selectedVote, setSelectedVote] = useState('');
 
     const saveVote = (evt) => {
         evt.stopPropagation();
@@ -23,6 +24,11 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
     const backToPreviousPage = (evt) => {
         evt.stopPropagation();
         history.push(config.HOME_PAGE);
+    };
+
+    const selectVote = (evt, url) => {
+        evt.stopPropagation();
+        setSelectedVote(url);
     };
 
     return (
@@ -37,12 +43,12 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                         <ul className="options-container">
                             {
                                 choices.map(({ choice, votes, url, votePercentage }) => (
-                                    <li key={`choice${url.split('/').join('-')}`}>
+                                    <li key={`choice${url.split('/').join('-')}`} className={selectedVote === url ? 'voted' : ''}>
                                         <div>{choice}</div>
                                         <div className="center">{`${votes} votes`}</div>
                                         <div className="center">{`${votePercentage}%`}</div>
                                         <div className="center">
-                                            <Button onClick={saveVote} primary label="Vote" />
+                                            <Button onClick={(evt) => selectVote(evt, url)} disabled={selectedVote === url} primary label={selectedVote === url ? 'Voted' : 'Vote'} />
                                         </div>
                                     </li>
                                 ))

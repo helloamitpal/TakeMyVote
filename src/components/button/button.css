@@ -10,3 +10,9 @@
   background-color: rgba(51,102,203,1);
   color: #fff;
 }
+
+.button[disabled] {
+  background: #eee;
+  color: #666;
+  pointer-events: none;
+}
