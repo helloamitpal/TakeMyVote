@@ -7,6 +7,7 @@ import * as voteActionCreators from '../voteActionCreator';
 import ErrorMessage from '../../../components/error';
 import { formatDate } from '../../../service/helper';
 import config from '../../../config';
+import Button from '../../../components/button';
 
 import './votingPage.css';
 
@@ -40,14 +41,16 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                                         <div>{choice}</div>
                                         <div className="center">{votes}</div>
                                         <div className="center">{`${votePercentage}%`}</div>
-                                        <div className="center">Vote</div>
+                                        <div className="center">
+                                            <Button onClick={saveVote} primary label="Vote" />
+                                        </div>
                                     </li>
                                 ))
                             }
                         </ul>
                         <div className="button-section">
-                            <button className="button" onClick={backToPreviousPage}>Back</button>
-                            <button className="button" onClick={saveVote}>Save Vote</button>
+                            <Button onClick={backToPreviousPage} label="Back" />
+                            <Button onClick={saveVote} primary label="Save Vote" />
                         </div>
                     </div>
                 )
