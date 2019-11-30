@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -17,6 +17,7 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
 
     const [choices, setChoices] = useState([{ id: 1, value: '' }, { id: 2, value: '' }]);
     const [question, setQuestion] = useState('');
+    const [redundantChoice, setRedundantChoice] = useState(-1);
 
     const createVote = (evt) => {
         voteActions.createVote({
@@ -41,6 +42,10 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
 
     const onChangeChoiceText = ({ target: { value } }, index) => {
         const list = [...choices];
+        const redundantIndex = choices.findIndex((obj) => (value.length > 1 && obj.value.toLowerCase().indexOf(value.toLowerCase()) >= 0));
+
+        setRedundantChoice(redundantIndex >= 0 ? index : redundantIndex);
+
         const { id } = list[index];
         Object.assign(list[index], { id, value });
         setChoices([ ...list ]);
@@ -65,6 +70,7 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
                 choices.map(({ value, id }, index) => (
                     <div className="choice-section" key={`choice-input-${id}`}>
                         <input readOnly={created} value={value} type="text" onChange={(evt) => onChangeChoiceText(evt, index)} placeholder={`Choice ${index+1}`} />
+                        {redundantChoice >= 0 && redundantChoice === index && <span className="inline-error">Redundant choice</span>}
                         {(index + 1) < choices.length && choices.length > MIN_CHOICE && <Button className="choice-btn" label="Remove" onClick={(evt) => removeChoice(evt, index)} />}
                         {(index + 1) === choices.length && <Button className="choice-btn" disabled={choices.length >= MAX_CHOICE} label="Add" onClick={addMoreChoice} />}
                     </div>
@@ -72,7 +78,7 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
             }
             <div className="button-section">
                 <Button label="Back" onClick={gotoPreviousPage} />
-                <Button label="Submit" disabled={created} primary onClick={createVote} />
+                <Button label="Submit" disabled={created || redundantChoice >= 0} primary onClick={createVote} />
             </div>
         </div>
     );

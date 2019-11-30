@@ -19,7 +19,7 @@ export const castVote = (url, payload) => (dispatch, getState, { api }) => {
 export const getQuestionDetails = (url) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.GET_QUESTION_DETAILS,
-        promise: api.get(`https://polls.apiblueprint.org/${url}`),
+        promise: api.get(url),
         payload: {}
     });
 };
