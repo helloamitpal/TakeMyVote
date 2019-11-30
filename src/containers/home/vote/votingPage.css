@@ -14,8 +14,9 @@
 }
 
 .voting-page-container .options-container li > div {
-  width: 50px;
+  width: 100px;
   padding: 10px;
+  box-sizing: border-box;
 }
 
 .voting-page-container .options-container li > div:first-child {
@@ -26,4 +27,21 @@
   margin-top: 1.5em;
   display: flex;
   justify-content: space-between;
+}
+
+@media screen and (max-width: 480px) {
+  .options-container li {
+    flex-direction: column;
+    margin: 15px 0;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.3);
+  }
+
+  .options-container li > div:first-child {
+    width: 100%;
+    text-align: center;
+  }
+
+  .voting-page-container .options-container {
+    border: 0 none;
+  }
 }

@@ -39,7 +39,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                                 choices.map(({ choice, votes, url, votePercentage }) => (
                                     <li key={`choice${url.split('/').join('-')}`}>
                                         <div>{choice}</div>
-                                        <div className="center">{votes}</div>
+                                        <div className="center">{`${votes} votes`}</div>
                                         <div className="center">{`${votePercentage}%`}</div>
                                         <div className="center">
                                             <Button onClick={saveVote} primary label="Vote" />
