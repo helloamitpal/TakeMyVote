@@ -18,8 +18,10 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
     const { question, published_at, url, choices } = questionDetails || {};
 
     useEffect(() => {
-        voteActions.getQuestionDetails(selectedQuestion);
-    }, []);
+        if (voted === undefined || voted === true) {
+            voteActions.getQuestionDetails(selectedQuestion);
+        }        
+    }, [voted]);
 
     const saveVote = (evt) => {
         evt.stopPropagation();
@@ -69,7 +71,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                         </ul>
                         <div className="button-section">
                             <Button onClick={backToPreviousPage} label="Back" />
-                            <Button onClick={saveVote} primary disabled={voted} label="Save Vote" />
+                            <Button onClick={saveVote} primary disabled={!selectedVote || voted} label="Save Vote" />
                         </div>
                     </div>
                 )
