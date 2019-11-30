@@ -15,12 +15,10 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
     const { loading, questionDetails, error, voted } = voteState;
     const { state: { selectedQuestion } } = location;
     const [selectedVote, setSelectedVote] = useState('');
-    const { question, published_at, url, choices } = questionDetails || {};
+    const { question, published_at, choices } = questionDetails || {};
 
     useEffect(() => {
-        if (voted === undefined || voted === true) {
-            voteActions.getQuestionDetails(selectedQuestion);
-        }        
+        voteActions.getQuestionDetails(selectedQuestion);
     }, [voted]);
 
     const saveVote = (evt) => {

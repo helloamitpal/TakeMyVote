@@ -16,3 +16,8 @@
 .question-container section {
   font-size: 0.8em;
 }
+
+.create-vote-btn {
+  display: flex;
+  margin: 20px auto;
+}

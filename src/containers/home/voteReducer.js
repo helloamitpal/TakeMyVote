@@ -94,7 +94,6 @@ const voteReducer = (state = initialState, action = '') => {
                     ...prevState,
                     error: '',
                     loading: true,
-                    voted: false,
                     questionDetails: null
                 }),
                 success: (prevState) => ({
