@@ -49,7 +49,8 @@ const voteReducer = (state = initialState, action = '') => {
                 start: (prevState) => ({
                     ...prevState,
                     error: '',
-                    loading: true
+                    loading: true,
+                    created: false
                 }),
                 success: (prevState) => ({
                     ...prevState,
@@ -120,13 +121,10 @@ const voteReducer = (state = initialState, action = '') => {
                     loading: true,
                     created: false
                 }),
-                success: (prevState) => {
-                    debugger;
-                    return {
-                        ...prevState,
-                        created: true
-                    };
-                },
+                success: (prevState) => ({
+                    ...prevState,
+                    created: true
+                }),
                 failure: (prevState) => ({
                     ...prevState,
                     error: 'Something went wrong. Please try again after some time.'

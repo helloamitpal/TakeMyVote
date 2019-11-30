@@ -15,6 +15,7 @@
 
 .question-container section {
   font-size: 0.8em;
+  margin: 10px 0;
 }
 
 .create-vote-btn {
