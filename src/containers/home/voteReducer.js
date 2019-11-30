@@ -1,6 +1,7 @@
 import { handle } from 'redux-pack';
 
 import * as actionTypes from './voteActionTypes';
+import { synthesizeData } from './voteHelper';
 
 const initialState = {
   questions: null,
@@ -21,7 +22,7 @@ const voteReducer = (state = initialState, action = '') => {
         }),
         success: (prevState) => ({
           ...prevState,
-          questions: [...payload]
+          questions: synthesizeData([...payload])
         }),
         failure: (prevState) => ({
           ...prevState,
