@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './button.css';
 
+// common button component
 const Button = ({ className, label, onClick, primary, disabled }) => (
     <button className={`button ${className} ${primary ? 'primary' : ''}`} disabled={disabled} onClick={onClick}>{label}</button>
 );

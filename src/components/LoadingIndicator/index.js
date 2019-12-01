@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './loadingIndicator.css';
 
+// common loading indicator component
 const LoadingIndicator = ({ type }) => {
   const html = (
     <React.Fragment>

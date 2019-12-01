@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import './grid.css';
 
+// common grid component to show
 const Grid = ({ children, className, onSelectCard }) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);

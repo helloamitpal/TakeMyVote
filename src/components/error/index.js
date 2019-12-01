@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import LoadingIndicator from '../loadingIndicator';
 
+// common error handler component
 const ErrorMessage = ({ className, loading, hasError, message }) => (
     <div className={`error-container ${className}`}>
         {loading ? <LoadingIndicator /> : null}

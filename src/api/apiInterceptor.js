@@ -1,20 +1,23 @@
 import axios from 'axios';
 import config from '../config';
 
+// creating axios instance
 const axiosInstance = axios.create({
   baseURL: config.API_BASE_URL
 });
 
+// adding common headers
 axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';
 axiosInstance.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 const fireRequest = async (method, fullUrl, data) => {
     const options = {
         method,
-        timeout: 4000,
+        timeout: 4000,// after this the API response will fail
         data: data || {}
     };
 
+    // serving api success or error response
     try {
         const res = axiosInstance(fullUrl, options);
         const fullResponse = await res;
