@@ -1,3 +1,5 @@
+// This is a helper function to synthesize the API response.
+// It will be calculating and adding voting percentage property in the response
 const synthesizeQuestionDetails = (data) => {
     const obj = {};
 

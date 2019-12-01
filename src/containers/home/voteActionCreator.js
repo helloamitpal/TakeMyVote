@@ -1,5 +1,6 @@
 import * as actionTypes from './voteActionTypes';
 
+// Action for getting the all question list
 export const getQuestionList = () => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.GET_ALL_QUESTIONS,
@@ -8,6 +9,7 @@ export const getQuestionList = () => (dispatch, getState, { api }) => {
     });
 };
 
+// Action for casting the vote
 export const castVote = (url, payload) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.CAST_VOTE,
@@ -16,6 +18,7 @@ export const castVote = (url, payload) => (dispatch, getState, { api }) => {
     });
 };
 
+// Action for getting the selected question details
 export const getQuestionDetails = (url) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.GET_QUESTION_DETAILS,
@@ -24,6 +27,7 @@ export const getQuestionDetails = (url) => (dispatch, getState, { api }) => {
     });
 };
 
+// Action for creating a new vote
 export const createVote = (payload) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.CREATE_VOTE,

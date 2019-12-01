@@ -6,6 +6,9 @@ import LoadingIndicator from '../components/loadingIndicator';
 
 import './router.css';
 
+// Implemented router with React.lazy to reduce the loading time.
+// On demand module load will be taking place while a certain router URL will be accessed.
+// This is a common router for all modules.
 const Router = () => {
     const HomeModule = (React.lazy(() => (import('../containers/home/HomePage'))));
     const NotFoundModule = (React.lazy(() => (import('../containers/not-found/NotFoundPage'))));

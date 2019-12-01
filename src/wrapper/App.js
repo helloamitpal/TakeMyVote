@@ -9,9 +9,11 @@ import Header from '../components/header';
 
 import './app.css';
 
+// main root component
 class App extends Component {
     constructor() {
         super();
+        // initializing redux store
         const { store } = configureStore()(this.onRehydrate);
         this.state = {
             store,
@@ -19,6 +21,7 @@ class App extends Component {
         };
     }
 
+    // callback function to get notified that redux store configuration is completed
     onRehydrate = () => {
         this.setState({ rehydrated: true });
     }
@@ -26,6 +29,7 @@ class App extends Component {
     render() {
         const { store, rehydrated } = this.state;
 
+        // rendering router once the redux store is prepared
         const content = rehydrated ? (
             <div className="app-container">
                 <Provider store={store} key={config.STORAGE_KEY}>

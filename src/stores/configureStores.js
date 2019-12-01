@@ -15,13 +15,16 @@ const persistConfig = {
   stateReconciler: autoMergeLevel1
 };
 
+// creating persistence storage. Localstorage will be used by redux-persist
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+// Redux thunk is allowing custom api method in every action creators
 const middlewares = [
   reduxThunk.withExtraArgument({ api }),
   reduxPackMiddleware
 ];
 
+// adding redux thunk middleware
 const storeEnhancers = [
   applyMiddleware(...middlewares)
 ];
@@ -32,6 +35,8 @@ export default (initialState) => (onComplete) => {
     initialState,
     compose(...storeEnhancers)
   );
+
+  // calling the provided callback function once the store is ready
   const storePersisted = persistStore(store, null, onComplete);
   return { storePersisted, store };
 };
