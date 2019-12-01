@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
@@ -8,6 +8,7 @@ import ErrorMessage from '../../../components/error';
 import { formatDate } from '../../../service/helper';
 import config from '../../../config';
 import Button from '../../../components/button';
+import Choice from './Choice';
 
 import './votingPage.css';
 
@@ -17,10 +18,12 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
     const [selectedVote, setSelectedVote] = useState('');
     const { question, published_at, choices } = questionDetails || {};
 
+    // calling the details API to get the question details
     useEffect(() => {
         voteActions.getQuestionDetails(selectedQuestion);
     }, [voted]);
 
+    // calling the API to vote for selected choice of respective question
     const saveVote = (evt) => {
         evt.stopPropagation();
         const data = choices.filter(({ url }) => (url === selectedVote));
@@ -34,11 +37,13 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
         voteActions.castVote(selectedVote, payload);
     };
 
+    // going back to the home page
     const backToPreviousPage = (evt) => {
         evt.stopPropagation();
         history.push(config.HOME_PAGE);
     };
 
+    // updating state for the selected choice
     const selectVote = (evt, url) => {
         evt.stopPropagation();
         setSelectedVote(url);
@@ -48,7 +53,18 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
         <div className="voting-page-container">
             <h1>Question Details</h1>
             <ErrorMessage loading={loading} hasError={error} message={error} />
-            {(!loading && !error && selectedQuestion && questionDetails && choices)
+
+            {(!error && selectedQuestion && questionDetails && choices && choices.length === 0)
+                ? (
+                    <Fragment>
+                        <p>No choices found</p>
+                        <Button onClick={backToPreviousPage} label="Back" />
+                    </Fragment>
+                )
+                : null
+            }
+
+            {(!error && selectedQuestion && questionDetails && choices && choices.length > 0)
                 ? (
                     <div className="details">
                         <h3 className="header">{`Question: ${question}`}</h3>
@@ -56,14 +72,18 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
                         <ul className="options-container">
                             {
                                 choices.map(({ choice, votes, url, votePercentage }) => (
-                                    <li key={`choice${url.split('/').join('-')}`} className={selectedVote === url ? 'voted' : ''}>
-                                        <div>{choice}</div>
-                                        <div className="center">{`${votes} votes`}</div>
-                                        <div className="center">{`${votePercentage}%`}</div>
-                                        <div className="center">
-                                            <Button onClick={(evt) => selectVote(evt, url)} disabled={voted || selectedVote === url} primary label={selectedVote === url ? 'Voted' : 'Vote'} />
-                                        </div>
-                                    </li>
+                                    <Choice
+                                        key={`choice${url.split('/').join('-')}`}
+                                        details={{
+                                            selectedVote,
+                                            choice,
+                                            votes,
+                                            votePercentage,
+                                            url,
+                                            voted,
+                                            selectVote
+                                        }}
+                                    />
                                 ))
                             }
                         </ul>

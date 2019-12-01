@@ -15,10 +15,12 @@ import './homePage.css';
 const HomePage = ({ voteState, voteActions, history }) => {
     const { loading, questions, error } = voteState;
 
+    // calling the API once the component load
     useEffect(() => {
         voteActions.getQuestionList();
     }, []);
 
+    // redirecting to the details page
     const onSelectCard = (evt, index) => {
         evt.stopPropagation();
         history.push({
@@ -27,6 +29,7 @@ const HomePage = ({ voteState, voteActions, history }) => {
         });
     };
 
+    // redirecting to the create question page
     const createVote = (evt) => {
         evt.stopPropagation();
         history.push(config.CREATE_VOTE_PAGE);
