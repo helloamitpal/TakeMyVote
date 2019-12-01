@@ -47,7 +47,7 @@ const VotingPage = ({ voteState, voteActions, location, history }) => {
     return (
         <div className="voting-page-container">
             <h1>Question Details</h1>
-            <ErrorMessage loading={loading} hasError={error} />
+            <ErrorMessage loading={loading} hasError={error} message={error} />
             {(!loading && !error && selectedQuestion && questionDetails && choices)
                 ? (
                     <div className="details">

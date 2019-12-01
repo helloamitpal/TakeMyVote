@@ -5,43 +5,43 @@ const axiosInstance = axios.create({
   baseURL: config.API_BASE_URL
 });
 
+axiosInstance.defaults.headers.post['Content-Type'] = 'application/json';
+axiosInstance.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+
 const fireRequest = async (method, fullUrl, data) => {
-  const options = {
-    method,
-    data,
-    timeout: 8000,
-    crossdomain: true,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+    const options = {
+        method,
+        timeout: 4000,
+        data: data || {}
+    };
+
+    try {
+        const res = axiosInstance(fullUrl, options);
+        const fullResponse = await res;
+        return fullResponse.data;
+    } catch (error) {
+        return Promise.reject(error);
     }
-  };
-  try {
-    const res = axiosInstance(fullUrl, options);
-    const fullResponse = await res;
-    return fullResponse.data;
-  } catch (error) {
-    return Promise.reject(error);
-  }
 };
 
 export default {
-  get(url) {
-    return fireRequest('GET', url);
-  },
+    get(url) {
+        return fireRequest('GET', url);
+    },
 
-  post(url, data) {
-    return fireRequest('POST', url, data);
-  },
+    post(url, data) {
+        return fireRequest('POST', url, data);
+    },
 
-  put(url, data) {
-    return fireRequest('PUT', url, data);
-  },
+    put(url, data) {
+        return fireRequest('PUT', url, data);
+    },
 
-  delete(url) {
-    return fireRequest('DELETE', url);
-  },
-  axios() {
-    return axiosInstance;
-  }
+    delete(url) {
+        return fireRequest('DELETE', url);
+    },
+
+    axios() {
+        return axiosInstance;
+    }
 };

@@ -34,7 +34,7 @@ const HomePage = ({ voteState, voteActions, history }) => {
 
     return (
         <div className="home-page-container">
-            <ErrorMessage loading={loading} hasError={error} />
+            <ErrorMessage loading={loading} hasError={error} message={error} />
             {(!loading && !error && questions && questions.length)
                 ? (
                     <Fragment>

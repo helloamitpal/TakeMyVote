@@ -13,7 +13,7 @@ const synthesizeQuestionDetails = (data) => {
         choicesArr.push({
             ...restChoice,
             votes,
-            votePercentage: Math.ceil((votes/totalVotes) * 100)
+            votePercentage: Math.round((votes/totalVotes) * 100)
         });
     });
 

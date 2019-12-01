@@ -59,7 +59,7 @@ const CreateVotePage = ({ voteState, voteActions, history }) => {
 
     return (
         <div className="create-vote-page-container">
-            <ErrorMessage loading={loading} hasError={error} />
+            <ErrorMessage loading={loading} hasError={error} message={error} />
             {created && !error && !loading && <p className="success">Vote has been created successfully</p>}
             <label htmlFor="question">
                 Question

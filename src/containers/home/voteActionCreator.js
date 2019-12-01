@@ -20,7 +20,7 @@ export const getQuestionDetails = (url) => (dispatch, getState, { api }) => {
     dispatch({
         type: actionTypes.GET_QUESTION_DETAILS,
         promise: api.get(url),
-        payload: {}
+        payload: { url }
     });
 };
 

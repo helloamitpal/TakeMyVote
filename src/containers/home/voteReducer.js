@@ -12,33 +12,10 @@ const initialState = {
     created: false
 };
 
-const temp = {
-    "question": "Favourite hot beverage?",
-    "published_at": "2015-05-27T21:22:26.648000+00:00",
-    "url": "/questions/9",
-    "choices": [
-        {
-            "choice": "Apple Cider",
-            "votes": 7,
-            "url": "/questions/9/choices/67"
-        },
-        {
-            "choice": "Coffee",
-            "votes": 4,
-            "url": "/questions/9/choices/66"
-        },
-        {
-            "choice": "Hot Chocolate",
-            "votes": 2,
-            "url": "/questions/9/choices/68"
-        },
-        {
-            "choice": "Tea",
-            "votes": 1,
-            "url": "/questions/9/choices/65"
-        }
-    ]
-};
+const failureMessage = (prevState, payload) => ({
+    ...prevState,
+    error: (payload && payload.message === 'Network Error') ? 'Please check the network and try again.' : 'Something went wrong. Please try again after some time.'
+});
 
 const voteReducer = (state = initialState, action = '') => {
     const { type, payload } = action;
@@ -50,16 +27,14 @@ const voteReducer = (state = initialState, action = '') => {
                     ...prevState,
                     error: '',
                     loading: true,
-                    created: false
+                    created: false,
+                    voted: false
                 }),
                 success: (prevState) => ({
                     ...prevState,
                     questions: [...payload]
                 }),
-                failure: (prevState) => ({
-                    ...prevState,
-                    error: 'Something went wrong. Please try again after some time.'
-                }),
+                failure: (prevState) => (failureMessage(prevState, payload)),
                 finish: (prevState) => ({
                     ...prevState,
                     loading: false
@@ -79,10 +54,7 @@ const voteReducer = (state = initialState, action = '') => {
                     ...prevState,
                     voted: true
                 }),
-                failure: (prevState) => ({
-                    ...prevState,
-                    error: 'Something went wrong. Please try again after some time.'
-                }),
+                failure: (prevState) => (failureMessage(prevState, payload)),
                 finish: (prevState) => ({
                     ...prevState,
                     loading: false
@@ -96,16 +68,32 @@ const voteReducer = (state = initialState, action = '') => {
                     ...prevState,
                     error: '',
                     loading: true,
-                    questionDetails: null
+                    questionDetails: null,
+                    url: payload.url
                 }),
-                success: (prevState) => ({
-                    ...prevState,
-                    questionDetails: synthesizeQuestionDetails(temp /*{ ...payload }*/)
-                }),
-                failure: (prevState) => ({
-                    ...prevState,
-                    error: 'Something went wrong. Please try again after some time.'
-                }),
+                success: (prevState) => {
+                    if (payload) {
+                        return {
+                            ...prevState,
+                            questionDetails: synthesizeQuestionDetails({ ...payload })
+                        };
+                    }
+
+                    if (prevState && prevState.questions) {
+                        const { url } = prevState;
+                        const data = prevState.questions.filter((item) => (url === item.url));
+
+                        if (data.length > 0) {
+                            return {
+                                ...prevState,
+                                questionDetails: synthesizeQuestionDetails({ ...data[0] })
+                            }
+                        }
+                    }
+
+                    return failureMessage(prevState, payload);
+                },
+                failure: (prevState) => (failureMessage(prevState, payload)),
                 finish: (prevState) => ({
                     ...prevState,
                     loading: false
@@ -125,10 +113,7 @@ const voteReducer = (state = initialState, action = '') => {
                     ...prevState,
                     created: true
                 }),
-                failure: (prevState) => ({
-                    ...prevState,
-                    error: 'Something went wrong. Please try again after some time.'
-                }),
+                failure: (prevState) => (failureMessage(prevState, payload)),
                 finish: (prevState) => ({
                     ...prevState,
                     loading: false
