@@ -12,9 +12,8 @@ import './createVotePage.css';
 
 const CreateVotePage = ({ voteState, voteActions, history }) => {
     const { loading, error, created } = voteState;
-    // setting the maximum and minimum choices as 15 and 2 respectively
-    const MAX_CHOICE = 15;
-    const MIN_CHOICE = 2;
+    // getting the maximum and minimum choices as 15 and 2 respectively
+    const { MAX_CHOICE, MIN_CHOICE } = config;
 
     const [choices, setChoices] = useState([{ id: 1, value: '' }, { id: 2, value: '' }]);
     const [question, setQuestion] = useState('');
